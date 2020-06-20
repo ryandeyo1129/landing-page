@@ -67,16 +67,15 @@ const activeSection = () => {
     addActive((sectionOffset < 200 && sectionOffset >= -200), section);
   })
 }
-
-// Scroll to anchor ID using scrollTO event
 window.addEventListener('scroll', activeSection)
 
-document.querySelectorAll('a').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+// Scroll to anchor ID with ScrollTo
+document.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', function(e) {
       e.preventDefault();
 
       document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
+        behavior: 'smooth'
       });
   });
 });
