@@ -13,45 +13,70 @@
  * 
 */
 
-/**
- * Define Global Variables
- * 
-*/
+// Define global variables
+const mainElement = document.querySelector('main');
+const navbarMenu = document.querySelector('#navbar__list');
 
+// Dynamically add sections
+for (let i = 4; i <= 7; i++) {
+  const sectionElement = document.createElement('section');
+  const landingElement = document.createElement('div');
+  
+  sectionElement.appendChild(landingElement);
 
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
+  landingElement.setAttribute('class', 'landing__container');
+  sectionElement.setAttribute('id', `section${i}`);
+  sectionElement.setAttribute('data-nav', `Section ${i}`);
 
+  landingElement.insertAdjacentHTML('beforeend', `<h2>Section ${i}</h2>`);
+  landingElement.insertAdjacentHTML('beforeend', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.</p>');
+  landingElement.insertAdjacentHTML('beforeend', '<p>Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.</p>');
 
+  mainElement.appendChild(sectionElement);
+}
 
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
+// Dynamically build navbar
+const selectSectionElements = document.querySelectorAll('section');
 
-// build the nav
+selectSectionElements.forEach(section => {
+  navbarMenu.insertAdjacentHTML('beforeend', `<li><a href="#${section.id}">${section.dataset.nav}</a></li>`)
+});
 
+const navbarList = document.querySelectorAll('li');
 
-// Add class 'active' to section when near top of viewport
+navbarList.forEach(item => {
+  item.setAttribute('class', 'menu__link')
+});
 
+// Add and remove active className
+const addActive = (inView, section) => {
+  if (inView) {
+    section.classList.add('your-active-class');
+  }
+}
+const removeActive = (section) => {
+  section.classList.remove('your-active-class');
+}
+
+// Detect and apply active className
+const activeSection = () => {
+  selectSectionElements.forEach(section => {
+    const sectionOffset = (Math.floor(section.getBoundingClientRect().top));
+  
+    removeActive(section);
+    addActive((sectionOffset < 200 && sectionOffset >= -200), section);
+  })
+}
 
 // Scroll to anchor ID using scrollTO event
+window.addEventListener('scroll', activeSection)
 
+document.querySelectorAll('a').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+      e.preventDefault();
 
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
-
-
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+      });
+  });
+});
