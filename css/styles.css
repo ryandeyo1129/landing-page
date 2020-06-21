@@ -238,12 +238,6 @@ section.your-active-class .landing__container::after {
 /* Change navbar for device wdith */
 
 @media(max-width: 670px) {
-  /* .navbar__menu {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-  } */
-
   .navbar__menu ul{
     display: grid;
     grid-template-columns: repeat(2, 2fr);
