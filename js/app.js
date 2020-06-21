@@ -39,42 +39,45 @@ for (let i = 4; i <= 7; i++) {
 const selectSectionElements = document.querySelectorAll('section');
 
 selectSectionElements.forEach(section => {
-  navbarMenu.insertAdjacentHTML('beforeend', `<li><a href="#${section.id}">${section.dataset.nav}</a></li>`)
+  navbarMenu.insertAdjacentHTML('beforeend', `<li><a href="${section.id}">${section.dataset.nav}</a></li>`)
 });
 
 const navbarList = document.querySelectorAll('li');
 
 navbarList.forEach(item => {
-  item.setAttribute('class', 'menu__link')
+  item.setAttribute('class', 'menu__link');
 });
 
 // Add and remove active className
-const addActive = (inView, section) => {
+const addActive = (inView, section, item) => {
   if (inView) {
     section.classList.add('your-active-class');
+    item.classList.add('link__active');
   }
 }
-const removeActive = (section) => {
+const removeActive = (section, item) => {
   section.classList.remove('your-active-class');
+  item.classList.remove('link__active');
 }
 
 // Detect and apply active className
 const activeSection = () => {
-  selectSectionElements.forEach(section => {
+  navbarList.forEach(item => {
+    const section = document.getElementById(item.firstChild.getAttribute('href'));
     const sectionOffset = (Math.floor(section.getBoundingClientRect().top));
-  
-    removeActive(section);
-    addActive((sectionOffset < 200 && sectionOffset >= -200), section);
+    
+    removeActive(section, item);
+    addActive((sectionOffset < 200 && sectionOffset >= -200), section, item);
   })
 }
-window.addEventListener('scroll', activeSection)
+window.addEventListener('scroll', activeSection);
 
 // Scroll to anchor ID with ScrollTo
 document.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', function(e) {
       e.preventDefault();
-
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
+      
+      document.getElementById(a.getAttribute('href')).scrollIntoView({
         behavior: 'smooth'
       });
   });

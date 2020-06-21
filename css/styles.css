@@ -95,6 +95,12 @@ section {
     transition: ease 0.3s all;
 }
 
+.link__active {
+  background: #333;
+  color: #fff;
+  transition: ease 0.3s all;
+}
+
 /* Header Styles */
 .page__header {
     background: #fff;
@@ -227,4 +233,29 @@ section.your-active-class .landing__container::after {
 		           translate(-1em) 
 		           rotate(-360deg);
 	}
+}
+
+/* Change navbar for device wdith */
+
+@media(max-width: 670px) {
+  /* .navbar__menu {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  } */
+
+  .navbar__menu ul{
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    grid-template-rows: repeat(2, 2fr);
+    justify-content: center;
+    width: 50%;
+  }
+}
+
+@media(max-width: 560px) {
+  .main__hero {
+    position: relative;
+    margin-top: 200px;
+  }
 }
